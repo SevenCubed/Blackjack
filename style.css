@@ -1,0 +1,48 @@
+body {
+    background-color: rgb(39, 53, 41);
+    font-family: sans-serif;
+}
+
+.card {
+    display: inline-block;
+    position: relative;
+    width: 5em;
+    height: 7em;
+    background-color: #ffffff;
+    box-shadow: 0 0.0625em 0.125em rgba(0, 0, 0, 0.15);
+    border-radius: 0.25em;
+    margin: 0.2em;
+  }
+
+  .card.red {
+    color: red;
+  }
+
+  .back {
+    background-color: #026873;
+    background-image: linear-gradient(90deg, rgba(255,255,255,.07) 50%, transparent 50%),
+    linear-gradient(90deg, rgba(255,255,255,.13) 50%, transparent 50%),
+    linear-gradient(90deg, transparent 50%, rgba(255,255,255,.17) 50%),
+    linear-gradient(90deg, transparent 50%, rgba(255,255,255,.19) 50%);
+    background-size: 13px, 29px, 37px, 53px;
+    box-shadow: 0 0 0 4pt white inset, 0 0.0625em 0.125em rgba(0, 0, 0, 0.15);
+  }
+/*
+*/
+.card-topleft {
+  position: absolute;
+  top: 0.5em;
+  left: 0.75em;
+}
+.card-bottomright {
+  position: absolute;
+  bottom: 0.5em;
+  right: 0.75em;
+  transform: rotate(180deg);
+}
+.card-corner-rank, .card-corner-suit {
+  width: 1em;
+  text-align: center;
+  transform: translate(-50%, 0);
+}
+
