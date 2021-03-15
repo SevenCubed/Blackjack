@@ -15,10 +15,13 @@ class Card {
         this.color = color;
         this.bitValue = bitValue; //If I use bit values, I can recognize the exact individual cards regardless of the result and future proof for future projects like poker or something.
     }
-    draw() {
+    draw(location) {
         const newDiv = document.createElement("div");
         newDiv.setAttribute('class', 'card')
-        const deckDiv = document.getElementsByClassName("deck");
+        newDiv.appendChild(document.createTextNode(this.rank));
+        newDiv.appendChild(document.createTextNode(this.suit));
+        newDiv.setAttribute("style", `color: ${this.color}`);
+        const deckDiv = document.getElementsByClassName(location);
         deckDiv[0].appendChild(newDiv);
     }
 }
@@ -36,7 +39,7 @@ class Deck {
             s = suits[Math.floor(i / 13)] //suit
             c = [i / 13 | 0] % 2 ? 'red' : 'black'; //color
             n = `${fullRanks[r]} of ${fullSuits[i / 13 | 0]}` //name
-            b = Math.pow(2, i);
+            b = Math.pow(2, r); //bit value of the rank
             this.deck.push(new Card(n, s, ranks[r], v, c, b));
         }
     }
@@ -69,14 +72,26 @@ let human = new Player('human');
 let dealer = new Player('dealer');
 deck1.shuffle();
 human.hand.push(deck1.deal());
-dealer.hand.push(deck1.deal());
+//dealer.hand.push(deck1.deal());
 human.hand.push(deck1.deal());
-dealer.hand.push(deck1.deal());
+//dealer.hand.push(deck1.deal());
 //console.log(`The ${human.hand[0].name} and the ${human.hand[1].name}. The total value is ${human.hand[0].value + human.hand[1].value}.`);
 human.hand.push(deck1.deal());
-console.log(human.hand)
-console.log(dealer.hand)
-console.log(deck1.deck.length)
-human.hand[0].draw();
-human.hand[0].draw();
-human.hand[0].draw();
+console.log(deck1)
+for(i=0;i<human.hand.length;i++){
+    human.hand[i].draw('deck');
+}
+//Blackjack choice functions
+function hit(){
+    
+}
+function stay(){
+
+}
+
+document.addEventListener('keydown', test)
+function test(){
+    console.log(deck1)
+    human.hand.push(deck1.deal());
+    human.hand[human.hand.length-1].draw('deck');
+}
