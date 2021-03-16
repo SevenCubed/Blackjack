@@ -2,7 +2,15 @@ body {
     background-color: rgb(39, 53, 41);
     font-family: sans-serif;
 }
-
+.container{
+  display: absolute;
+}
+h1{
+  color: ivory;
+}
+.dealer, .deck{
+  height: 8em;
+}
 .card {
     display: inline-block;
     position: relative;
