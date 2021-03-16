@@ -166,7 +166,7 @@ function stay() {
         dealer.total = valueMap.reduce((x, y) => x + y);
         dealer.hand[dealer.hand.length - 1].draw('dealer');
         if (dealer.total > 21) {
-            if (valueMap.indexOf(11) != -1) {
+            if (valueMap.indexOf(11) != -1) { //TODO:Rewrite as ternary?
                 dealer.hand[valueMap.indexOf(11)].value = 1 //This sets the value of an ace from 11 to 1 for the remainder of the hand.
                 dealer.total -= 10
             }
