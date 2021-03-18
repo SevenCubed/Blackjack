@@ -35,22 +35,3 @@ h1{
     background-size: 13px, 29px, 37px, 53px;
     box-shadow: 0 0 0 4pt white inset, 0 0.0625em 0.125em rgba(0, 0, 0, 0.15);
   }
-/*
-*/
-.card-topleft {
-  position: absolute;
-  top: 0.5em;
-  left: 0.75em;
-}
-.card-bottomright {
-  position: absolute;
-  bottom: 0.5em;
-  right: 0.75em;
-  transform: rotate(180deg);
-}
-.card-corner-rank, .card-corner-suit {
-  width: 1em;
-  text-align: center;
-  transform: translate(-50%, 0);
-}
-
