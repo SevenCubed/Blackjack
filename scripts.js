@@ -109,11 +109,11 @@ function wipe() {
     }
     human.reset();
     dealer.reset();
-    //dealButton.addEventListener('click', firstDeal);
+    dealButton.addEventListener('click', firstDeal);
 }
 
 function firstDeal() {
-    //dealButton.removeEventListener('click', firstDeal);
+    dealButton.removeEventListener('click', firstDeal);
     human.hand.push(deck1.deal());
     dealer.hand.push(deck1.deal());
     human.hand.push(deck1.deal());
@@ -137,8 +137,8 @@ function firstDeal() {
         dealer.total = 21;
     }
     if (dealer.blackjack || human.blackjack) { stay() }; //go straight to score evaluation.
-    //hitButton.addEventListener('click', hit);
-    //stayButton.addEventListener('click', stay);
+    hitButton.addEventListener('click', hit);
+    stayButton.addEventListener('click', stay);
 }
 
 function hit() {
