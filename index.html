@@ -14,15 +14,16 @@
             <button id="btnDeal">Deal</button>
             <button id="btnHit">Hit</button>
             <button id="btnStay">Stay</button>
-            <button id="btnWipe">Wipe</button>
-            <button id="btnSimulate">Simulate</button>
-            <button id="btnFlip"  onclick="dealer.hand[1].flip()">Flip</button>
+            <button id="btnWipe" onclick="wipe()" hidden>Wipe</button>
+            <button id="btnFlip" onclick="dealer.hand[1].flip()">Flip</button>
+            <button id="btnSimulate" onclick="simulate()" hidden>Simulate</button>
+            <button id="btnNewGame">New Game</button>
 
         </div>
-        <h1>Dealer</h1>
+        <h1 class="nameheader">Dealer (0)</h1>
         <div class='dealer'>
         </div>
-        <h1>Player</h1>
+        <h1 class="nameheader">Human (0)</h1>
         <div class='deck'>
         </div>
     </div>

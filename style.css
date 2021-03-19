@@ -1,5 +1,5 @@
 body {
-    background-color: rgb(39, 53, 41);
+    background-color: #477148;
     font-family: sans-serif;
 }
 .container{
@@ -10,6 +10,21 @@ h1{
 }
 .dealer, .deck{
   height: 8em;
+  padding-left:15px;
+
+}
+.nameheader{
+  text-align:center;
+  width:200px;
+  color:#fff;
+  padding:5px 0;
+  margin-left:10px;
+  box-sizing:border-box;
+  border:2px solid #fff;
+  border-radius:5px;
+  margin-top:15px;
+  overflow:hidden;
+  position:relative;
 }
 .card {
     background-size: contain;
@@ -36,4 +51,9 @@ h1{
     linear-gradient(90deg, transparent 50%, rgba(255,255,255,.19) 50%);
     background-size: 13px, 29px, 37px, 53px;*/
     box-shadow: 0 0 0 4pt white inset, 0 0.0625em 0.125em rgba(0, 0, 0, 0.15);
+  }
+  .card.flip {
+    transform: rotateY(180deg) scaleX(-1);
+    transform-style: preserve-3d;
+    transition: 0.6s
   }
