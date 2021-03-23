@@ -1,5 +1,6 @@
-/*Notes     - give the player proper UI feedback on the game.
-            The front card graphics were taken from https://totalnonsense.com/download/download-vector-playing-cards/
+/*Notes    The front card graphics were taken from https://totalnonsense.com/download/download-vector-playing-cards/
+            the card back is the wikicommons card back, with the Script logo edited in by me using an online SVG editor.
+            I coded some things with future features in mind more for myself and to develop good practices, than to actually code in those future features.
 */
 //Globals & Classes
 const ranks = 'A 2 3 4 5 6 7 8 9 10 J Q K'.split(' ');
