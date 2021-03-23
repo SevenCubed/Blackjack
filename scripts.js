@@ -58,6 +58,7 @@ class Card {
         //this kind of looks like a mess, but it works.. The effect is purely visual, the actual value of the card is stored inside .value,
         //and that's not altered. So even if the animation breaks or messes up, the actual functionality of the game shouldn't alter.
         //By timing the swapping of the background image to the exact moment the card div is 90 degrees transformed, it creates the illusion of an actual card flip.
+        //Upon testing at home, it turns out this doesn't work equally well on different PCs.
     }
 }
 
