@@ -10,21 +10,24 @@
 
 <body>
     <div class='container'>
-        <div class='test'>
-            <button id="btnDeal">Deal</button>
-            <button id="btnHit">Hit</button>
-            <button id="btnStay">Stay</button>
-            <button id="btnWipe" onclick="wipe()" hidden>Wipe</button>
-            <button id="btnFlip" onclick="dealer.hand[1].flip()">Flip</button>
-            <button id="btnSimulate" onclick="simulate()" hidden>Simulate</button>
+        <div class='buttons'>
             <button id="btnNewGame">New Game</button>
-
+            <button id="btnDeal" disabled>Deal</button>
+            <button id="btnHit" disabled>Hit</button>
+            <button id="btnStay" disabled>Stay</button>
+            <button id="btnFlip" onclick="dealer.hand[1].flip()">Flip</button>
         </div>
         <h1 class="nameheader">Dealer (0)</h1>
+        <div class="score"></div>
         <div class='dealer'>
         </div>
         <h1 class="nameheader">Human (0)</h1>
+        <div class="score"></div>
         <div class='deck'>
+        </div>
+        <div class="nameheader output">
+            <div id="result">BLACKJACK</div>
+            <div id="details">in Javascript</div>
         </div>
     </div>
     <script src="scripts.js"></script>

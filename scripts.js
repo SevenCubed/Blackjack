@@ -9,9 +9,11 @@ const fullSuits = 'Spades Hearts Clubs Diamonds'.split(' ')
 const hitButton = document.getElementById('btnHit');
 const stayButton = document.getElementById('btnStay');
 const dealButton = document.getElementById('btnDeal');
-const wipeButton = document.getElementById('btnWipe');
 const newGameButton = document.getElementById('btnNewGame');
-const cardBack = "back_script_1"
+const resultScreen = document.getElementById('result');
+const detailsScreen = document.getElementById('details');
+const scoreDiv = document.getElementsByClassName('score');
+const cardBack = "back_script_1" //defining this here, should I want to add the ability to swap card backs
 let game, deck, human, dealer; //the variables needed for the newGame()
 newGameButton.addEventListener('click', newGame);
 dealButton.addEventListener('click', firstDeal);
@@ -33,7 +35,6 @@ class Card {
         this.div = document.createElement("div");
         const deckDiv = document.getElementsByClassName(location);
         this.div.setAttribute('class', 'card')
-
         if (closed != true) {
             this.div.setAttribute("style", `background-image: url("img/${this.rank + this.suit}.svg"`);
         }
@@ -58,7 +59,7 @@ class Card {
         //this kind of looks like a mess, but it works.. The effect is purely visual, the actual value of the card is stored inside .value,
         //and that's not altered. So even if the animation breaks or messes up, the actual functionality of the game shouldn't alter.
         //By timing the swapping of the background image to the exact moment the card div is 90 degrees transformed, it creates the illusion of an actual card flip.
-        //Upon testing at home, it turns out this doesn't work equally well on different PCs.
+        //Upon testing at home, it turns out this doesn't work equally well on different PCs. The background art has a feed, meaning the illusion is lost.
     }
 }
 
@@ -132,6 +133,7 @@ class Game {
 
 //New game
 function newGame() {
+    console.log(`Let's-a go!`)
     game = new Game();
     deck = new Deck();
     human = new Player('Human');
@@ -139,10 +141,10 @@ function newGame() {
     wipe();
     dealButton.disabled = false;
     hitButton.disabled = true;
-    stayButton.disabled = true
+    stayButton.disabled = true;
     const winDivs = document.getElementsByClassName("nameheader");
-    winDivs[0].innerHTML = `${dealer.name} (${dealer.wins})`
-    winDivs[1].innerHTML = `${human.name} (${human.wins})`
+    winDivs[0].innerHTML = `${dealer.name} (${dealer.wins})`;
+    winDivs[1].innerHTML = `${human.name} (${human.wins})`;
     return game, deck, human, dealer;
 }
 function wipe() {
@@ -154,6 +156,10 @@ function wipe() {
     while (div.firstChild) {
         div.removeChild(div.firstChild);
     }
+    resultScreen.innerHTML = ""
+    detailsScreen.innerHTML = ""
+    scoreDiv[0].innerHTML = ""
+    scoreDiv[1].innerHTML = ""
     human.reset();
     dealer.reset();
 }
@@ -163,12 +169,15 @@ function firstDeal() {
     dealButton.disabled = true; //turn off the deal button to transition to the hit/stay phase
     hitButton.disabled = false; //this is the same as removeAttribute? but it seems to play nicer when trying to ADD the disabled
     stayButton.disabled = false;
+
     for (i = 0; i < 2; i++) {
         human.hand.push(deck.deal());
         dealer.hand.push(deck.deal());
         human.hand[i].draw('deck');
         i == 1 ? dealer.hand[i].draw('dealer', true) : dealer.hand[i].draw('dealer')
     }
+    scoreDiv[0].innerHTML = dealer.hand[0].value + '+'
+    scoreDiv[1].innerHTML = human.total;
     if ((human.hand[0].value == 11 && human.hand[1].value == 10) || (human.hand[0].value == 10 && human.hand[1].value == 11)) {
         //Should the player ever get Blackjack on the draw, that's an instant victory.. Except if they both have one.
         human.blackjack = true;
@@ -182,8 +191,6 @@ function firstDeal() {
         hitButton.disabled = true;
         eval()  //go straight to score evaluation.
     };
-    console.log(human.total)
-    console.log(dealer.total)
 }
 
 function hit() {
@@ -202,12 +209,12 @@ function hit() {
             eval();
         }
     }
+    scoreDiv[1].innerHTML = human.total; //Gotta write it here, or it won't update for adjusted Aces
 }
 
 function stay() {
     hitButton.disabled = true;
     stayButton.disabled = true;
-    //dealer.hand[1].draw('dealer');
     while ((dealer.total < 17 || (dealer.total < 16 && human.total == 16)) && !human.bust && !human.blackjack) {
         dealer.hand.push(deck.deal());
         let valueMap = dealer.hand.map(card => card.value)
@@ -222,48 +229,68 @@ function stay() {
             }
         }//It  does not seem to be possible in JS to pause the script for more fluid "drawing" of the dealer's cards without completely hogging the CPU with some kind of while/newDate loop
     }
+    scoreDiv[0].innerHTML = dealer.total;
     eval();
 }
 function eval() {
     dealer.hand[1].flip(); //the dealer must show the card even on a bust, so I'm putting this here even if it's not exactly the order of proper blackjack operations.
+    let result, details; 
     switch (true) {
         case (human.blackjack && dealer.blackjack):
             console.log('Draw: Both the player as the dealer have a blackjack! What are the odds!?');
+            result = 'DRAW'
+            details = `Both ${human.name} as the dealer have a blackjack! What are the odds!?`
             game.draws++
             break;
         case (human.blackjack):
             console.log('Victory: Player won through blackjack.');
+            result = 'VICTORY'
+            details = `${human.name} won through blackjack!`
             human.wins++
             break;
         case (dealer.blackjack):
             console.log('Defeat: Dealer won through blackjack');
+            result = 'DEFEAT'
+            details = 'The dealer won through blackjack?'
             dealer.wins++
             break;
         case (human.bust):
             console.log('Defeat: Player busted.');
+            result = 'DEFEAT'
+            details = `${human.name} busted.`
             dealer.wins++
             break;
         case (dealer.bust):
             console.log('Victory: Dealer busted.');
+            result = 'VICTORY'
+            details = 'The dealer busted.'
             human.wins++
             break;
-        /*  case (human.hand.length >=5 && !humanbust):
-                console.log('Victory: Five card trick! ... But this is a casino game, so we don't use that rule.)
-                human.wins++
-                break;      */
+        /*case (human.hand.length >=5 && !humanbust):
+            console.log('Victory: Five card trick! ... But this is a casino game, so we don't use that rule.)
+            human.wins++
+            break;      */
         case (dealer.total == human.total):
             console.log('Draw: Dealer scored equal to the player.');
+            result = 'DRAW'
+            details = `${human.name} and the dealer have the same score!`
             game.draws++
             break;
         case (dealer.total > human.total):
             console.log('Defeat: Dealer scored higher than the player.');
+            result = 'DEFEAT'
+            details = `The dealer scored higher than ${human.name}!`
             dealer.wins++
             break;
         case (human.total > dealer.total):
-            console.log('Victory: Player scored higher than the player.');
+            console.log('Victory: Player scored higher than the dealer.');
+            result = 'VICTORY'
+            details = `${human.name} scored higher than the dealer!`;
             human.wins++
             break;
     }
+    resultScreen.innerHTML = result;
+    detailsScreen.innerHTML = details;
     game.round++
     game.shuffle++
     if (Math.random() < ((game.shuffle - 1) / 4)) { //Between every 2 to 5 games, with increasing likeliness from 25%-100%, the deck will be shuffled.
@@ -281,7 +308,6 @@ function simulate() {
     console.time('timing');
     let draw = 0, defeat = 0, victory = 0, sims = 10000;
     for (let j = 0; j < sims; j++) {
-        //console.log(j)
         firstDeal();
         if (dealer.blackjack && human.blackjack) {
             draw++
@@ -299,4 +325,3 @@ function simulate() {
     console.log(`There's a ${((defeat + victory + draw) / sims * 100).toFixed(2)}% chance of blackjack and a ${(draw / sims * 100).toFixed(2)}% chance for a draw.`)
     console.timeEnd('timing');
 }
-newGame();

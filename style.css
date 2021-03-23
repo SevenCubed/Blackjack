@@ -2,8 +2,40 @@ body {
     background-color: #477148;
     font-family: sans-serif;
 }
+button{
+  background-color: #1f3120;
+
+  border: none;
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  margin: 4px 2px;
+  border-radius: 50%;
+  display: absolute;
+  width: 40px;
+  height: 40px;
+}
+#btnNewGame{
+  font-size:40%
+}
+#btnDeal{
+  background-color: #4CAF50;
+}
+#btnHit{
+  background-color: #a12f12;
+}
+#btnStay{
+  background-color: #342d77;
+}
+button:disabled, #btnDeal:disabled, #btnNewGame:disabled, #btnStay:disabled, #btnHit:disabled, #btnNewGame:disabled{
+  background-color: rgb(75, 75, 75);
+  color: darkgray;
+}
 .container{
   display: absolute;
+  width:50%;
+  align-items: center;
+  margin: auto;
 }
 h1{
   color: ivory;
@@ -15,7 +47,7 @@ h1{
 }
 .nameheader{
   text-align:center;
-  width:200px;
+  width:300px;
   color:#fff;
   padding:5px 0;
   margin-left:10px;
@@ -26,6 +58,15 @@ h1{
   overflow:hidden;
   position:relative;
 }
+.output{
+  min-width: 250px;
+  min-height: 4.5em;
+}
+#result{
+  font-weight: bold;
+  font-size: xx-large
+}
+
 .card {
     background-size: contain;
     display: inline-block;
@@ -56,4 +97,15 @@ h1{
     transform: rotateY(180deg) scaleX(-1);
     transform-style: preserve-3d;
     transition: 0.6s
+  }
+
+  .score{
+    float:left;
+    height: 7em;
+    line-height: 7em;
+    display:block;
+    padding-right:0.3em;
+    min-width: 2em;
+    color: white;
+    font-weight: bold;
   }
